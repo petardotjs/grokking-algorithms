@@ -30,7 +30,7 @@
         {
             this.label1 = new System.Windows.Forms.Label();
             this.buttonFibonacci = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.buttonFindGCD = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
@@ -61,14 +61,15 @@
             this.buttonFibonacci.UseVisualStyleBackColor = true;
             this.buttonFibonacci.Click += new System.EventHandler(this.ButtonFibonacci_Click);
             // 
-            // button2
+            // buttonFindGCD
             // 
-            this.button2.Location = new System.Drawing.Point(46, 98);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 2;
-            this.button2.Text = "button2";
-            this.button2.UseVisualStyleBackColor = true;
+            this.buttonFindGCD.Location = new System.Drawing.Point(46, 98);
+            this.buttonFindGCD.Name = "buttonFindGCD";
+            this.buttonFindGCD.Size = new System.Drawing.Size(75, 23);
+            this.buttonFindGCD.TabIndex = 2;
+            this.buttonFindGCD.Text = "Find GCD";
+            this.buttonFindGCD.UseVisualStyleBackColor = true;
+            this.buttonFindGCD.Click += new System.EventHandler(this.ButtonFindGCD_Click);
             // 
             // button3
             // 
@@ -155,7 +156,7 @@
             this.Controls.Add(this.button5);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.buttonFindGCD);
             this.Controls.Add(this.buttonFibonacci);
             this.Controls.Add(this.label1);
             this.Name = "Form1";
@@ -170,7 +171,7 @@
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button buttonFibonacci;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button buttonFindGCD;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button5;
