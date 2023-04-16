@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Numerics;
 using System.Windows.Forms;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace SDA_46651r_MyProject
 {
@@ -12,6 +13,8 @@ namespace SDA_46651r_MyProject
         {
             InitializeComponent();
         }
+
+        private readonly string[] separators = new string[] { " ", ",", ", " };
 
         public class DialogConfig
         {
@@ -38,6 +41,26 @@ namespace SDA_46651r_MyProject
             InputDialogButtonText = "Find GCD",
             InfoDialogTitle = "GCD and the Euclidean Algorithm",
             InfoDialogDescription = "The greatest common divisor (GCD) of two integers is the largest positive integer that divides both of them without leaving a remainder. The Euclidean Algorithm is a method for finding the GCD of two integers by iteratively finding the remainder when the larger number is divided by the smaller number, and replacing the larger number with the smaller number and the smaller number with the remainder until the remainder is 0."
+        };
+
+        // https://leetcode.com/problems/longest-common-prefix/
+        readonly DialogConfig lcpConfig = new DialogConfig
+        {
+            InputDialogTitle = "Find the longest common prefix",
+            InputDialogLabelText = "Enter 2 or more strings:",
+            InputDialogButtonText = "Find LCP",
+            InfoDialogTitle = "What is LCP?",
+            InfoDialogDescription = "LCP stands for \"longest common prefix\". It is a problem in computer science that involves finding the longest string that is a prefix of a set of strings.\r\n\r\nFor example, consider the set of strings [\"flower\", \"flow\", \"flight\"]. The longest common prefix of these strings is \"fl\"."
+        };
+
+        // https://leetcode.com/problems/restore-ip-addresses/
+        readonly DialogConfig restoreIPConfig = new DialogConfig
+        {
+            InputDialogTitle = "Restore IP Addresses",
+            InputDialogLabelText = "Enter a string of digits:",
+            InputDialogButtonText = "Restore IPs",
+            InfoDialogTitle = "How does the 'Restore IPs algorithm' work?",
+            InfoDialogDescription = "Given a string of digits, this problem involves restoring all possible valid IP addresses that can be formed by inserting dots into the string. Each integer is between 0 and 255 (inclusive) and cannot have leading zeros. For example, \"25525511135\" can be restored as [\"255.255.11.135\", \"255.255.111.35\"]."
         };
 
         private void ButtonFibonacci_Click(object s, EventArgs e)
@@ -94,8 +117,6 @@ namespace SDA_46651r_MyProject
                 {
                     string textBoxValue = inputForm.Controls[1].Text;
 
-                    string[] separators = new string[] { " ", ",", ", " };
-
                     int[] numbers = textBoxValue.Split(separators, StringSplitOptions.RemoveEmptyEntries)
                                          .Select(int.Parse)
                                          .ToArray();
@@ -129,6 +150,89 @@ namespace SDA_46651r_MyProject
 
             inputForm.ShowDialog();
         }
+
+        private void ButtonFindLCP_Click(object sender, EventArgs e)
+        {
+            Form inputForm = CreateInputDialog(lcpConfig);
+
+            inputForm.Controls[2].Click += (s2, e2) =>
+            {
+                string[] inputStrings = { };
+
+                try
+                {
+                    string textBoxValue = inputForm.Controls[1].Text;
+
+                    string[] strings = textBoxValue.Split(separators, StringSplitOptions.RemoveEmptyEntries);
+
+
+                    if (strings.Length >= 2)
+                    {
+                        // the input is safe so I can take it
+                        inputStrings = strings;
+                    }
+                    else
+                    {
+                        throw new Exception();
+                    }
+                }
+                catch (Exception)
+                {
+                    // Display an error message if the user enters a non-numeric value
+                    MessageBox.Show(this, "The input should be at least 2 strings, separated by either a white space or a comma.", "Invalid Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+                if (inputStrings.Length != 0)
+                {
+                    string lcp = LongestCommonPrefix(inputStrings);
+
+                    ShowResultDialog(lcp != "" ? $"The LCP of the given input is {lcp}." : "The given strings have no common prefix.");
+                };
+            };
+
+            inputForm.ShowDialog();
+        }
+
+        private void ButtonRestoreIPAddress_Click(object sender, EventArgs e)
+        {
+            Form inputForm = CreateInputDialog(restoreIPConfig);
+
+            inputForm.Controls[2].Click += (s2, e2) =>
+            {
+                string inputString = "";
+
+                try
+                {
+                    inputString = inputForm.Controls[1].Text;
+
+                    if (IsIPAddressInputValid(inputString))
+                    {
+                        List<string> validIPs = RestoreIPAddress(inputString);
+
+                        if (validIPs.Count > 0)
+                        {
+                            ShowResultDialog($"The valid IP addresses that can be formed from\n the input are:\n{string.Join("\n", validIPs)}");
+                        }
+                        else
+                        {
+                            ShowResultDialog("No valid IP addresses can be formed from the input.");
+                        }
+                    }
+                    else
+                    {
+                        throw new Exception();
+                    }
+                }
+                catch (Exception)
+                {
+                    // Display an error message if the user enters an invalid input
+                    MessageBox.Show(this, "The input should be a string of digits representing an IPv4 address.", "Invalid Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            };
+
+            inputForm.ShowDialog();
+        }
+
 
         private Form CreateInputDialog(DialogConfig dialogConfig)
         {
@@ -333,6 +437,89 @@ namespace SDA_46651r_MyProject
                 num2 = remainder;
             }
             return num1;
+        }
+
+        public string LongestCommonPrefix(string[] strs)
+        {
+            string prefix = strs[0];
+
+            for (int i = 1; i < strs.Length; i++)
+            {
+                while (strs[i].IndexOf(prefix) != 0)
+                {
+                    prefix = prefix.Substring(0, prefix.Length - 1);
+                    if (prefix == "")
+                    {
+                        return "";
+                    }
+                }
+            }
+
+            return prefix;
+        }
+
+        public List<string> RestoreIPAddress(string s)
+        {
+            List<string> result = new List<string>();
+            int n = s.Length;
+
+            for (int i = 1; i <= 3; i++)
+            {
+                for (int j = i + 1; j <= i + 3; j++)
+                {
+                    for (int k = j + 1; k <= j + 3 && k < n; k++)
+                    {
+                        string s1 = s.Substring(0, i);
+                        string s2 = s.Substring(i, j - i);
+                        string s3 = s.Substring(j, k - j);
+                        string s4 = s.Substring(k);
+                        if (IsIPAddressSegmentValid(s1) && IsIPAddressSegmentValid(s2) && IsIPAddressSegmentValid(s3) && IsIPAddressSegmentValid(s4))
+                        {
+                            result.Add(s1 + "." + s2 + "." + s3 + "." + s4);
+                        }
+                    }
+                }
+            }
+
+            return result;
+        }
+
+
+        private bool IsIPAddressSegmentValid(string s)
+        {
+            int n = s.Length;
+            if (n == 0 || n > 3 || (n > 1 && s[0] == '0') || int.Parse(s) > 255)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        private bool IsIPAddressInputValid(string s)
+        {
+            if (string.IsNullOrEmpty(s))
+            {
+                return false;
+            }
+
+            int n = s.Length;
+
+            // Check if the string length is between 4 and 12
+            if (n < 4 || n > 12)
+            {
+                return false;
+            }
+
+            // Check if the string contains only digits
+            for (int i = 0; i < n; i++)
+            {
+                if (!char.IsDigit(s[i]))
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
     }
 }
