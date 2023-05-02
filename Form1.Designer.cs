@@ -33,7 +33,7 @@
             this.buttonFindGCD = new System.Windows.Forms.Button();
             this.buttonFindLCP = new System.Windows.Forms.Button();
             this.buttonRestoreIPAddress = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
+            this.buttonTwinSum = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -86,21 +86,22 @@
             this.buttonRestoreIPAddress.UseVisualStyleBackColor = true;
             this.buttonRestoreIPAddress.Click += new System.EventHandler(this.ButtonRestoreIPAddress_Click);
             // 
-            // button5
+            // buttonTwinSum
             // 
-            this.button5.Location = new System.Drawing.Point(363, 41);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(75, 23);
-            this.button5.TabIndex = 5;
-            this.button5.Text = "button5";
-            this.button5.UseVisualStyleBackColor = true;
+            this.buttonTwinSum.Location = new System.Drawing.Point(313, 46);
+            this.buttonTwinSum.Name = "buttonTwinSum";
+            this.buttonTwinSum.Size = new System.Drawing.Size(196, 23);
+            this.buttonTwinSum.TabIndex = 5;
+            this.buttonTwinSum.Text = "Maximum Twin Sum of a Linked List";
+            this.buttonTwinSum.UseVisualStyleBackColor = true;
+            this.buttonTwinSum.Click += new System.EventHandler(this.ButtonMaxTwinSum_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.button5);
+            this.Controls.Add(this.buttonTwinSum);
             this.Controls.Add(this.buttonRestoreIPAddress);
             this.Controls.Add(this.buttonFindLCP);
             this.Controls.Add(this.buttonFindGCD);
@@ -121,7 +122,7 @@
         private System.Windows.Forms.Button buttonFindGCD;
         private System.Windows.Forms.Button buttonFindLCP;
         private System.Windows.Forms.Button buttonRestoreIPAddress;
-        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button buttonTwinSum;
     }
 }
 

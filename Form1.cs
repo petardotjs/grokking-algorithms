@@ -1,9 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Numerics;
 using System.Windows.Forms;
-using System.Linq;
-using System.Collections.Generic;
 
 namespace SDA_46651r_MyProject
 {
@@ -63,6 +63,16 @@ namespace SDA_46651r_MyProject
             InfoDialogDescription = "Given a string of digits, this problem involves restoring all possible valid IP addresses that can be formed by inserting dots into the string. Each integer is between 0 and 255 (inclusive) and cannot have leading zeros. For example, \"25525511135\" can be restored as [\"255.255.11.135\", \"255.255.111.35\"]."
         };
 
+        // https://leetcode.com/problems/maximum-twin-sum-of-a-linked-list/
+        readonly DialogConfig maxTwinSumConfig = new DialogConfig
+        {
+            InputDialogTitle = "Maximum Twin Sum of a Linked List",
+            InputDialogLabelText = "Enter 2 or more integers:",
+            InputDialogButtonText = "Calculate Maximum Twin Sum",
+            InfoDialogTitle = "How does the 'Maximum Twin Sum algorithm' work?",
+            InfoDialogDescription = "Given a linked list of even length, this problem involves finding the maximum twin sum of the linked list. A node is the twin of another node if its index is the mirror image of the index of the other node. The twin sum is defined as the sum of a node and its twin."
+        };
+
         private void ButtonFibonacci_Click(object s, EventArgs e)
         {
             Form inputForm = CreateInputDialog(fibonacciConfig);
@@ -111,7 +121,7 @@ namespace SDA_46651r_MyProject
 
             inputForm.Controls[2].Click += (s2, e2) =>
             {
-                int[] inputNumbers = {};
+                int[] inputNumbers = { };
 
                 try
                 {
@@ -122,7 +132,7 @@ namespace SDA_46651r_MyProject
                                          .ToArray();
 
 
-                    if(numbers.Length == 2)
+                    if (numbers.Length == 2)
                     {
                         // the input is safe so I can take it
                         inputNumbers = numbers;
@@ -232,6 +242,53 @@ namespace SDA_46651r_MyProject
 
             inputForm.ShowDialog();
         }
+
+        private void ButtonMaxTwinSum_Click(object sender, EventArgs e)
+        {
+            Form inputForm = CreateInputDialog(maxTwinSumConfig);
+
+            inputForm.Controls[2].Click += (s2, e2) =>
+            {
+                string inputString = "";
+
+                try
+                {
+                    inputString = inputForm.Controls[1].Text;
+                    int[] nums = inputString.Split(' ').Select(int.Parse).ToArray();
+
+                    ListNode head = null;
+                    ListNode tail = null;
+
+                    foreach (int num in nums)
+                    {
+                        ListNode newNode = new ListNode(num);
+
+                        if (head == null)
+                        {
+                            head = newNode;
+                            tail = newNode;
+                        }
+                        else
+                        {
+                            tail.next = newNode;
+                            tail = newNode;
+                        }
+                    }
+
+                    int maxTwinSum = FindMaxTwinSum(head);
+
+                    ShowResultDialog($"The maximum twin sum of the input array is {maxTwinSum}.");
+                }
+                catch (Exception)
+                {
+                    // Display an error message if the user enters an invalid input
+                    MessageBox.Show(this, "The input should be a space-separated list of non-negative integers.", "Invalid Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            };
+
+            inputForm.ShowDialog();
+        }
+
 
 
         private Form CreateInputDialog(DialogConfig dialogConfig)
@@ -384,14 +441,29 @@ namespace SDA_46651r_MyProject
             closeButton.Left = (resultForm.Width - closeButton.Width) / 2;
             closeButton.Click += (s3, e3) => { resultForm.Close(); };
 
-            resultLabel.Top = (resultForm.Height - resultLabel.Height - closeButton.Height) * 1 / 3;
-            closeButton.Top = (resultForm.Height - resultLabel.Height - closeButton.Height) * 2 / 3;
+            resultLabel.Top = (resultForm.ClientSize.Height) * 1 / 3 - resultLabel.Height * 1 / 2;
+            closeButton.Top = (resultForm.ClientSize.Height) * 2 / 3 - closeButton.Height * 1 / 2;
 
             // I decided to add it there as well, just to make it responsive - on resizing it should stay centered
             resultForm.SizeChanged += (s3, e3) =>
             {
                 resultLabel.Left = (resultForm.Width - resultLabel.Width) / 2;
                 closeButton.Left = (resultForm.Width - closeButton.Width) / 2;
+            };
+
+            resultLabel.SizeChanged += (s2, e2) =>
+            {
+                // if the label is too big so it could overlap the button if it was placed near the 2/3rd part of the form; especially needed for the restore ip algo
+                if (resultLabel.Height > 100)
+                {
+                    resultLabel.Top = 10;
+                    closeButton.Top = resultForm.ClientSize.Height - closeButton.Height - 10;
+                }
+                else
+                {
+                    resultLabel.Top = (resultForm.ClientSize.Height) * 1 / 3 - resultLabel.Height * 1 / 2;
+                    closeButton.Top = (resultForm.ClientSize.Height) * 2 / 3 - closeButton.Height * 1 / 2;
+                }
             };
 
             resultForm.Controls.Add(resultLabel);
@@ -520,6 +592,46 @@ namespace SDA_46651r_MyProject
             }
 
             return true;
+        }
+
+        public class ListNode
+        {
+            public int val;
+            public ListNode next;
+            public ListNode(int val = 0, ListNode next = null)
+            {
+                this.val = val;
+                this.next = next;
+            }
+        }
+
+        public static int FindMaxTwinSum(ListNode head)
+        {
+            if (head == null || head.next == null)
+            {
+                return 0; // empty list or list with one node
+            }
+
+            List<int> nums = new List<int>();
+            while (head != null)
+            {
+                nums.Add(head.val);
+                head = head.next;
+            }
+
+            nums.Sort(); // sort the list to maximize the twin sum
+
+            int left = 0, right = nums.Count - 1;
+            int maxSum = 0;
+            while (left < right)
+            {
+                int sum = nums[left] + nums[right];
+                maxSum = Math.Max(maxSum, sum);
+                left++;
+                right--;
+            }
+
+            return maxSum;
         }
     }
 }
