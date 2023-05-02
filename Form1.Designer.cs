@@ -1,6 +1,6 @@
 ﻿namespace SDA_46651r_MyProject
 {
-    partial class Form1
+    partial class formGrokkingAlgos
     {
         /// <summary>
         /// Required designer variable.
@@ -40,7 +40,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(204, 176);
+            this.label1.Location = new System.Drawing.Point(216, 198);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(368, 42);
             this.label1.TabIndex = 0;
@@ -48,7 +48,7 @@
             // 
             // buttonFibonacci
             // 
-            this.buttonFibonacci.Location = new System.Drawing.Point(646, 127);
+            this.buttonFibonacci.Location = new System.Drawing.Point(663, 155);
             this.buttonFibonacci.Name = "buttonFibonacci";
             this.buttonFibonacci.Size = new System.Drawing.Size(75, 23);
             this.buttonFibonacci.TabIndex = 1;
@@ -58,7 +58,7 @@
             // 
             // buttonFindGCD
             // 
-            this.buttonFindGCD.Location = new System.Drawing.Point(28, 127);
+            this.buttonFindGCD.Location = new System.Drawing.Point(60, 155);
             this.buttonFindGCD.Name = "buttonFindGCD";
             this.buttonFindGCD.Size = new System.Drawing.Size(75, 23);
             this.buttonFindGCD.TabIndex = 2;
@@ -68,7 +68,7 @@
             // 
             // buttonFindLCP
             // 
-            this.buttonFindLCP.Location = new System.Drawing.Point(83, 300);
+            this.buttonFindLCP.Location = new System.Drawing.Point(155, 335);
             this.buttonFindLCP.Name = "buttonFindLCP";
             this.buttonFindLCP.Size = new System.Drawing.Size(130, 23);
             this.buttonFindLCP.TabIndex = 3;
@@ -78,7 +78,7 @@
             // 
             // buttonRestoreIPAddress
             // 
-            this.buttonRestoreIPAddress.Location = new System.Drawing.Point(576, 300);
+            this.buttonRestoreIPAddress.Location = new System.Drawing.Point(541, 335);
             this.buttonRestoreIPAddress.Name = "buttonRestoreIPAddress";
             this.buttonRestoreIPAddress.Size = new System.Drawing.Size(84, 23);
             this.buttonRestoreIPAddress.TabIndex = 4;
@@ -88,7 +88,7 @@
             // 
             // buttonTwinSum
             // 
-            this.buttonTwinSum.Location = new System.Drawing.Point(313, 46);
+            this.buttonTwinSum.Location = new System.Drawing.Point(310, 90);
             this.buttonTwinSum.Name = "buttonTwinSum";
             this.buttonTwinSum.Size = new System.Drawing.Size(196, 23);
             this.buttonTwinSum.TabIndex = 5;
@@ -96,7 +96,7 @@
             this.buttonTwinSum.UseVisualStyleBackColor = true;
             this.buttonTwinSum.Click += new System.EventHandler(this.ButtonMaxTwinSum_Click);
             // 
-            // Form1
+            // formGrokkingAlgos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -107,9 +107,11 @@
             this.Controls.Add(this.buttonFindGCD);
             this.Controls.Add(this.buttonFibonacci);
             this.Controls.Add(this.label1);
-            this.Name = "Form1";
+            this.MaximumSize = new System.Drawing.Size(816, 489);
+            this.MinimumSize = new System.Drawing.Size(816, 489);
+            this.Name = "formGrokkingAlgos";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Form1";
+            this.Text = "Grokking Algorithms";
             this.ResumeLayout(false);
             this.PerformLayout();
 

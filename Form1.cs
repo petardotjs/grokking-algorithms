@@ -7,9 +7,9 @@ using System.Windows.Forms;
 
 namespace SDA_46651r_MyProject
 {
-    public partial class Form1 : Form
+    public partial class formGrokkingAlgos : Form
     {
-        public Form1()
+        public formGrokkingAlgos()
         {
             InitializeComponent();
         }
@@ -254,7 +254,13 @@ namespace SDA_46651r_MyProject
                 try
                 {
                     inputString = inputForm.Controls[1].Text;
-                    int[] nums = inputString.Split(' ').Select(int.Parse).ToArray();
+                    string[] numStrings = inputString.Split(separators, StringSplitOptions.RemoveEmptyEntries);
+                    int[] nums = numStrings.Select(int.Parse).ToArray();
+
+                    if (nums.Length % 2 != 0)
+                    {
+                        throw new Exception();
+                    }
 
                     ListNode head = null;
                     ListNode tail = null;
@@ -282,7 +288,7 @@ namespace SDA_46651r_MyProject
                 catch (Exception)
                 {
                     // Display an error message if the user enters an invalid input
-                    MessageBox.Show(this, "The input should be a space-separated list of non-negative integers.", "Invalid Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(this, "The input should be an even length list of integers, separated by either a white space or a comma.", "Invalid Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             };
 
@@ -605,33 +611,28 @@ namespace SDA_46651r_MyProject
             }
         }
 
-        public static int FindMaxTwinSum(ListNode head)
-        {
-            if (head == null || head.next == null)
+ 
+            public int FindMaxTwinSum(ListNode head)
             {
-                return 0; // empty list or list with one node
+                List<int> nums = new List<int>();
+                ListNode current = head;
+                while (current != null)
+                {
+                    nums.Add(current.val);
+                    current = current.next;
+                }
+                int n = nums.Count;
+                int maxTwinSum = 0;
+                for (int i = 0; i < n / 2; i++)
+                {
+                    int twinSum = nums[i] + nums[n - 1 - i];
+                    if (twinSum > maxTwinSum)
+                    {
+                        maxTwinSum = twinSum;
+                    }
+                }
+                return maxTwinSum;
             }
-
-            List<int> nums = new List<int>();
-            while (head != null)
-            {
-                nums.Add(head.val);
-                head = head.next;
-            }
-
-            nums.Sort(); // sort the list to maximize the twin sum
-
-            int left = 0, right = nums.Count - 1;
-            int maxSum = 0;
-            while (left < right)
-            {
-                int sum = nums[left] + nums[right];
-                maxSum = Math.Max(maxSum, sum);
-                left++;
-                right--;
-            }
-
-            return maxSum;
-        }
+        
     }
 }
