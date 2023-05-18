@@ -43,7 +43,6 @@ namespace SDA_46651r_MyProject
             InfoDialogDescription = "The greatest common divisor (GCD) of two integers is the largest positive integer that divides both of them without leaving a remainder. The Euclidean Algorithm is a method for finding the GCD of two integers by iteratively finding the remainder when the larger number is divided by the smaller number, and replacing the larger number with the smaller number and the smaller number with the remainder until the remainder is 0."
         };
 
-        // https://leetcode.com/problems/longest-common-prefix/
         readonly DialogConfig lcpConfig = new DialogConfig
         {
             InputDialogTitle = "Find the longest common prefix",
@@ -53,7 +52,6 @@ namespace SDA_46651r_MyProject
             InfoDialogDescription = "LCP stands for \"longest common prefix\". It is a problem in computer science that involves finding the longest string that is a prefix of a set of strings.\r\n\r\nFor example, consider the set of strings [\"flower\", \"flow\", \"flight\"]. The longest common prefix of these strings is \"fl\"."
         };
 
-        // https://leetcode.com/problems/restore-ip-addresses/
         readonly DialogConfig restoreIPConfig = new DialogConfig
         {
             InputDialogTitle = "Restore IP Addresses",
@@ -63,14 +61,13 @@ namespace SDA_46651r_MyProject
             InfoDialogDescription = "Given a string of digits, this problem involves restoring all possible valid IP addresses that can be formed by inserting dots into the string. Each integer is between 0 and 255 (inclusive) and cannot have leading zeros. For example, \"25525511135\" can be restored as [\"255.255.11.135\", \"255.255.111.35\"]."
         };
 
-        // https://leetcode.com/problems/maximum-twin-sum-of-a-linked-list/
         readonly DialogConfig maxTwinSumConfig = new DialogConfig
         {
             InputDialogTitle = "Maximum Twin Sum of a Linked List",
             InputDialogLabelText = "Enter 2 or more integers:",
             InputDialogButtonText = "Calculate Maximum Twin Sum",
-            InfoDialogTitle = "How does the 'Maximum Twin Sum algorithm' work?",
-            InfoDialogDescription = "Given a linked list of even length, this problem involves finding the maximum twin sum of the linked list. A node is the twin of another node if its index is the mirror image of the index of the other node. The twin sum is defined as the sum of a node and its twin."
+            InfoDialogTitle = "What is Maximum Twin Sum?",
+            InfoDialogDescription = "In a linked list with even non-zero length (n), the numbers are grouped as follows - the 1st one with the last one (n-th), the 2nd with the n-1, etc. Maximum Twin Sum is the highest sum of integers among the pairs."
         };
 
         private void ButtonFibonacci_Click(object s, EventArgs e)
@@ -83,9 +80,6 @@ namespace SDA_46651r_MyProject
 
                 try
                 {
-                    // because I check if the input is != 0 outside the try-block, I shouldn't change its value until I'm sure that the value is valid
-                    // so I use middle variable for that purpose. Otherwise, an error would be showed and the fibonacci would be calculated for that 
-                    // value that is out of range since userInput would not be 0 anymore. I should make it something other than 0 only if the value is safe (valid)
                     int userInputToBeChecked = int.Parse(inputForm.Controls[1].Text);
 
                     if (userInputToBeChecked > 150 || userInputToBeChecked <= 0)
@@ -93,18 +87,15 @@ namespace SDA_46651r_MyProject
                         throw new Exception();
                     }
 
-                    // the input is safe so I can take it
                     userInput = userInputToBeChecked;
                 }
                 catch (Exception)
                 {
-                    // Display an error message if the user enters a non-numeric value
                     MessageBox.Show(this, "Wrong input.", "Invalid Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
                 if (userInput != -1)
                 {
-                    // Calculate the nth Fibonacci number
                     BigInteger fibonacci = CalculateFibonacci(userInput);
 
                     ShowResultDialog($"The {userInput}th Fibonacci number is {fibonacci}.");
@@ -127,14 +118,10 @@ namespace SDA_46651r_MyProject
                 {
                     string textBoxValue = inputForm.Controls[1].Text;
 
-                    int[] numbers = textBoxValue.Split(separators, StringSplitOptions.RemoveEmptyEntries)
-                                         .Select(int.Parse)
-                                         .ToArray();
-
+                    int[] numbers = textBoxValue.Split(separators, StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToArray();
 
                     if (numbers.Length == 2)
                     {
-                        // the input is safe so I can take it
                         inputNumbers = numbers;
                     }
                     else
@@ -144,13 +131,11 @@ namespace SDA_46651r_MyProject
                 }
                 catch (Exception)
                 {
-                    // Display an error message if the user enters a non-numeric value
                     MessageBox.Show(this, "The input should be exactly 2 numbers, separated by either a white space or a comma.", "Invalid Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
                 if (inputNumbers.Length != 0)
                 {
-                    // Calculate the nth Fibonacci number
                     int gcd = EuclideanAlgorithm(inputNumbers[0], inputNumbers[1]);
 
                     ShowResultDialog($"The GCD of {inputNumbers[0]} and {inputNumbers[1]} is {gcd}.");
@@ -178,7 +163,6 @@ namespace SDA_46651r_MyProject
 
                     if (strings.Length >= 2)
                     {
-                        // the input is safe so I can take it
                         inputStrings = strings;
                     }
                     else
@@ -188,7 +172,6 @@ namespace SDA_46651r_MyProject
                 }
                 catch (Exception)
                 {
-                    // Display an error message if the user enters a non-numeric value
                     MessageBox.Show(this, "The input should be at least 2 strings, separated by either a white space or a comma.", "Invalid Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
@@ -235,7 +218,6 @@ namespace SDA_46651r_MyProject
                 }
                 catch (Exception)
                 {
-                    // Display an error message if the user enters an invalid input
                     MessageBox.Show(this, "The input should be a string of digits representing an IPv4 address.", "Invalid Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             };
@@ -287,7 +269,6 @@ namespace SDA_46651r_MyProject
                 }
                 catch (Exception)
                 {
-                    // Display an error message if the user enters an invalid input
                     MessageBox.Show(this, "The input should be an even length list of integers, separated by either a white space or a comma.", "Invalid Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             };
@@ -295,16 +276,12 @@ namespace SDA_46651r_MyProject
             inputForm.ShowDialog();
         }
 
-
-
         private Form CreateInputDialog(DialogConfig dialogConfig)
         {
-            // Show a modal form with a text box for user input
             Form inputForm = new Form
             {
                 MinimumSize = new Size(300, 150),
                 MaximumSize = new Size(900, 450),
-                // I started using the ClientSize since the Size wasn't quite accurate for me because it includes some additional area like title bar, borders, etc.
                 ClientSize = new Size(400, 200),
                 Text = dialogConfig.InputDialogTitle,
                 StartPosition = FormStartPosition.CenterParent
@@ -316,17 +293,15 @@ namespace SDA_46651r_MyProject
 
             inputLabel.Text = dialogConfig.InputDialogLabelText;
             inputLabel.AutoSize = true;
-            // because otherwise the standard height will be taken and won't be resized after the autosize is being calculated
             inputLabel.SizeChanged += (s2, e2) =>
             {
-                inputLabel.Top = (inputForm.ClientSize.Height - inputTextBox.ClientSize.Height) / 2 - inputLabel.ClientSize.Height - 10;
+                inputLabel.Top = (inputForm.ClientSize.Height - inputTextBox.Height) / 2 - inputLabel.Height - 10;
             };
 
-            inputTextBox.ClientSize = new Size(200, 20);
+            inputTextBox.Size = new Size(200, 20);
             inputTextBox.Top = (inputForm.ClientSize.Height - inputTextBox.ClientSize.Height) / 2;
             inputTextBox.Left = (inputForm.ClientSize.Width - inputTextBox.ClientSize.Width) / 2;
 
-            // on pressing enter perform click
             inputTextBox.KeyDown += (s2, e2) =>
             {
                 if (e2.KeyCode == Keys.Enter)
@@ -338,14 +313,10 @@ namespace SDA_46651r_MyProject
 
             inputButton.Text = dialogConfig.InputDialogButtonText;
             inputButton.ClientSize = new Size(150, 20);
-            // the position of the textBox + the height of the textBox itself + 20 (so as result I've positioned the button 20px under the textBox)
             inputButton.Top = (inputForm.ClientSize.Height - inputTextBox.ClientSize.Height) / 2 + inputTextBox.ClientSize.Height + 20;
-
             inputButton.Left = (inputForm.ClientSize.Width - inputButton.ClientSize.Width) / 2;
 
-            // on the same level on the y axis as the textBox
             inputLabel.Left = (inputForm.ClientSize.Width - inputTextBox.ClientSize.Width) / 2;
-            // 10px above the textBox
             inputLabel.Top = (inputForm.ClientSize.Height - inputTextBox.ClientSize.Height) / 2 - inputLabel.ClientSize.Height - 10;
 
             PictureBox inputPictureBox = new PictureBox
@@ -361,7 +332,6 @@ namespace SDA_46651r_MyProject
             };
 
 
-            // make it responsive on window resizing
             inputForm.SizeChanged += (s2, e2) =>
             {
                 inputTextBox.Top = (inputForm.ClientSize.Height - inputTextBox.ClientSize.Height) / 2;
@@ -382,14 +352,6 @@ namespace SDA_46651r_MyProject
             inputForm.Controls.Add(inputButton);
             inputForm.Controls.Add(inputPictureBox);
 
-            // tried this but the function is not finished until the dialog is not being closed
-            //return new InputControls
-            //{
-            //    TextBox = inputTextBox,
-            //    Button = inputButton,
-            //};
-            // so i had to attach the click event listener before the dialog is being showed and decided to return it
-
             return inputForm;
         }
 
@@ -406,13 +368,14 @@ namespace SDA_46651r_MyProject
 
             Label infoLabel = new Label
             {
-                ClientSize = new Size(infoForm.ClientSize.Width - 50, infoForm.ClientSize.Height - 50)
+                ClientSize = new Size(infoForm.ClientSize.Width - 50, infoForm.ClientSize.Height - 50),
+
+                Text = infoDialogDescription,
+                Font = new Font("Arial", 12, FontStyle.Regular),
+                TextAlign = ContentAlignment.MiddleCenter
             };
-            infoLabel.Left = (infoForm.ClientSize.Width - infoLabel.ClientSize.Width) / 2;
-            infoLabel.Top = (infoForm.ClientSize.Height - infoLabel.ClientSize.Height) / 2;
-            infoLabel.Text = infoDialogDescription;
-            infoLabel.Font = new Font("Arial", 12, FontStyle.Regular);
-            infoLabel.TextAlign = ContentAlignment.MiddleCenter;
+            infoLabel.Left = (infoForm.ClientSize.Width - infoLabel.Width) / 2;
+            infoLabel.Top = (infoForm.ClientSize.Height - infoLabel.Height) / 2;
 
             infoForm.Controls.Add(infoLabel);
             infoForm.ShowDialog();
@@ -420,21 +383,20 @@ namespace SDA_46651r_MyProject
 
         private void ShowResultDialog(string result)
         {
-            // Show the result in a new modal form
             Form resultForm = new Form
             {
                 ClientSize = new Size(400, 200),
                 StartPosition = FormStartPosition.CenterParent
 
             };
+
             Label resultLabel = new Label
             {
-                // make the control has width based on its content - like fit-content in CSS
                 AutoSize = true,
                 Text = result,
                 Font = new Font("Arial", 12, FontStyle.Regular)
             };
-            // when using autosize, the width of the result label would stay static 100 and wouldn't be centered properly unless I've added this snippet
+
             resultLabel.SizeChanged += (s3, e3) =>
             {
                 resultLabel.Left = (resultForm.ClientSize.Width - resultLabel.ClientSize.Width) / 2;
@@ -450,7 +412,6 @@ namespace SDA_46651r_MyProject
             resultLabel.Top = (resultForm.ClientSize.Height) * 1 / 3 - resultLabel.Height * 1 / 2;
             closeButton.Top = (resultForm.ClientSize.Height) * 2 / 3 - closeButton.Height * 1 / 2;
 
-            // I decided to add it there as well, just to make it responsive - on resizing it should stay centered
             resultForm.SizeChanged += (s3, e3) =>
             {
                 resultLabel.Left = (resultForm.Width - resultLabel.Width) / 2;
@@ -459,7 +420,6 @@ namespace SDA_46651r_MyProject
 
             resultLabel.SizeChanged += (s2, e2) =>
             {
-                // if the label is too big so it could overlap the button if it was placed near the 2/3rd part of the form; especially needed for the restore ip algo
                 if (resultLabel.Height > 100)
                 {
                     resultLabel.Top = 10;
@@ -477,53 +437,46 @@ namespace SDA_46651r_MyProject
             resultForm.ShowDialog();
         }
 
-        //private int CalculateFibonacci(int n)
-        //{
-        //    if (n == 0)
-        //        return 0;
-        //    if (n == 1)
-        //        return 1;
-        //   return CalculateFibonacci(n - 1) + CalculateFibonacci(n - 2); 
-        //}
-
-        // the first version of the function looks better because of less code but its complexity is higher - O(n^2) and it struggles to compute the answer after 40
-        // because the stack is overloaded
-        private BigInteger CalculateFibonacci(int n)
+        private BigInteger CalculateFibonacci(int nthFibonacci)
         {
-            if (n == 0)
+            if (nthFibonacci == 0)
                 return 0;
-            if (n == 1)
+            if (nthFibonacci == 1)
                 return 1;
 
-            BigInteger a = 0, b = 1, c = 0;
-            for (BigInteger i = 2; i <= n; i++)
+            BigInteger penultimateNumber = 0, lastNumber = 1, currentNumber = 0;
+
+            for (BigInteger i = 2; i <= nthFibonacci; i++)
             {
-                c = a + b;
-                a = b;
-                b = c;
+                currentNumber = penultimateNumber + lastNumber;
+                penultimateNumber = lastNumber;
+                lastNumber = currentNumber;
             }
-            return c;
+
+            return currentNumber;
         }
 
-        private int EuclideanAlgorithm(int num1, int num2)
+        private int EuclideanAlgorithm(int number1, int number2)
         {
             int remainder;
-            while (num2 != 0)
+
+            while (number2 != 0)
             {
-                remainder = num1 % num2;
-                num1 = num2;
-                num2 = remainder;
+                remainder = number1 % number2;
+                number1 = number2;
+                number2 = remainder;
             }
-            return num1;
+
+            return number1;
         }
 
-        public string LongestCommonPrefix(string[] strs)
+        public string LongestCommonPrefix(string[] strings)
         {
-            string prefix = strs[0];
+            string prefix = strings[0];
 
-            for (int i = 1; i < strs.Length; i++)
+            for (int i = 1; i < strings.Length; i++)
             {
-                while (strs[i].IndexOf(prefix) != 0)
+                while (strings[i].IndexOf(prefix) != 0)
                 {
                     prefix = prefix.Substring(0, prefix.Length - 1);
                     if (prefix == "")
@@ -536,24 +489,24 @@ namespace SDA_46651r_MyProject
             return prefix;
         }
 
-        public List<string> RestoreIPAddress(string s)
+        public List<string> RestoreIPAddress(string input)
         {
             List<string> result = new List<string>();
-            int n = s.Length;
+            int inputLength = input.Length;
 
-            for (int i = 1; i <= 3; i++)
+            for (int secondSegmentStart = 1; secondSegmentStart <= 3; secondSegmentStart++)
             {
-                for (int j = i + 1; j <= i + 3; j++)
+                for (int thirdSegmentStart = secondSegmentStart + 1; thirdSegmentStart <= secondSegmentStart + 3; thirdSegmentStart++)
                 {
-                    for (int k = j + 1; k <= j + 3 && k < n; k++)
+                    for (int fourthSegmentStart = thirdSegmentStart + 1; fourthSegmentStart <= thirdSegmentStart + 3 && fourthSegmentStart < inputLength; fourthSegmentStart++)
                     {
-                        string s1 = s.Substring(0, i);
-                        string s2 = s.Substring(i, j - i);
-                        string s3 = s.Substring(j, k - j);
-                        string s4 = s.Substring(k);
-                        if (IsIPAddressSegmentValid(s1) && IsIPAddressSegmentValid(s2) && IsIPAddressSegmentValid(s3) && IsIPAddressSegmentValid(s4))
+                        string segment1 = input.Substring(0, secondSegmentStart);
+                        string segment2 = input.Substring(secondSegmentStart, thirdSegmentStart - secondSegmentStart);
+                        string segment3 = input.Substring(thirdSegmentStart, fourthSegmentStart - thirdSegmentStart);
+                        string segment4 = input.Substring(fourthSegmentStart);
+                        if (IsIPAddressSegmentValid(segment1) && IsIPAddressSegmentValid(segment2) && IsIPAddressSegmentValid(segment3) && IsIPAddressSegmentValid(segment4))
                         {
-                            result.Add(s1 + "." + s2 + "." + s3 + "." + s4);
+                            result.Add(segment1 + "." + segment2 + "." + segment3 + "." + segment4);
                         }
                     }
                 }
@@ -562,36 +515,33 @@ namespace SDA_46651r_MyProject
             return result;
         }
 
-
-        private bool IsIPAddressSegmentValid(string s)
+        private bool IsIPAddressSegmentValid(string segment)
         {
-            int n = s.Length;
-            if (n == 0 || n > 3 || (n > 1 && s[0] == '0') || int.Parse(s) > 255)
+            int segmentLength = segment.Length;
+            if (segmentLength == 0 || segmentLength > 3 || (segmentLength > 1 && segment[0] == '0') || int.Parse(segment) > 255)
             {
                 return false;
             }
             return true;
         }
 
-        private bool IsIPAddressInputValid(string s)
+        private bool IsIPAddressInputValid(string ipAddress)
         {
-            if (string.IsNullOrEmpty(s))
+            if (string.IsNullOrEmpty(ipAddress))
             {
                 return false;
             }
 
-            int n = s.Length;
+            int n = ipAddress.Length;
 
-            // Check if the string length is between 4 and 12
             if (n < 4 || n > 12)
             {
                 return false;
             }
 
-            // Check if the string contains only digits
             for (int i = 0; i < n; i++)
             {
-                if (!char.IsDigit(s[i]))
+                if (!char.IsDigit(ipAddress[i]))
                 {
                     return false;
                 }
@@ -611,28 +561,29 @@ namespace SDA_46651r_MyProject
             }
         }
 
- 
-            public int FindMaxTwinSum(ListNode head)
+        public int FindMaxTwinSum(ListNode head)
+        {
+            List<int> extractedValues = new List<int>();
+            ListNode current = head;
+
+            while (current != null)
             {
-                List<int> nums = new List<int>();
-                ListNode current = head;
-                while (current != null)
-                {
-                    nums.Add(current.val);
-                    current = current.next;
-                }
-                int n = nums.Count;
-                int maxTwinSum = 0;
-                for (int i = 0; i < n / 2; i++)
-                {
-                    int twinSum = nums[i] + nums[n - 1 - i];
-                    if (twinSum > maxTwinSum)
-                    {
-                        maxTwinSum = twinSum;
-                    }
-                }
-                return maxTwinSum;
+                extractedValues.Add(current.val);
+                current = current.next;
             }
-        
+
+            int maxTwinSum = 0;
+
+            for (int i = 0; i < extractedValues.Count / 2; i++)
+            {
+                int twinSum = extractedValues[i] + extractedValues[extractedValues.Count - 1 - i];
+                if (twinSum > maxTwinSum)
+                {
+                    maxTwinSum = twinSum;
+                }
+            }
+
+            return maxTwinSum;
+        }
     }
 }
